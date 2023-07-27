@@ -15,10 +15,10 @@ app.use(cors());
 app.use(errorHandlerMiddleware);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/homepage.html'));
+  res.sendFile(path.resolve(__dirname, './client/homepage.html'));
 });
 
-app.use(express.static(path.resolve(__dirname, '../client'))); // Use path.resolve
+app.use(express.static(path.resolve(__dirname, './client'))); // Use path.resolve
 
 app.use('/api/v1', mainRoutes);
 app.use('/api/v1', adminRoutes);
