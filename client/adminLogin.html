@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!--scss-->
+    <link rel="stylesheet" href="sass/auth.css">
+
+
+     <!-- axios -->
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+     <!-- toast-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-content">
+                <h1>Admin Login</h1>
+
+                <p><i> Welcome to forthwell Insurance </i></p>
+
+                <form class="login-form" id="adminlogin-form">
+                    <div>
+                        <label for="email">Email
+                            <input type="email" name="email" id="email" placeholder="Enter your email">
+                        </label>
+                    </div>
+                   <div>
+                        <label for="password">Password
+                            <input type="password" name="password" id="password" placeholder="Enter your password">
+                        </label>
+                   </div>                
+
+                   <p id="response-error"></p>
+                    <button>Login</button>
+
+                    
+                </form>
+        </div>
+    </div>
+
+      <!-- JavaScript to redirect to login page -->
+
+    <!--library scripts-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!--custom scripts-->
+    <script src="js/adminLogin.js"></script>
+</body>
+</html>

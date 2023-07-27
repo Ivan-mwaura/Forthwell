@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Insurance Covers</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../sass/adminpanel.css">
+
+
+    <!-- Include Tabulator CSS and jQuery -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.2.2/css/tabulator.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.2.2/js/tabulator.min.js"></script>
+
+     <!-- toast-->
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+     <!-- Custom CSS for Tabulator -->
+    <style>
+        /* Change background color of the whole table */
+        .tabulator {
+            background-color: #f0f0f0;
+        }
+
+        /* Change font size of the table */
+        .tabulator,
+        .tabulator th,
+        .tabulator td {
+            font-size: 16px;
+        }
+
+        /* Change font color of the header cells */
+        .tabulator .tabulator-header {
+            color: #333;
+        }
+
+        /* Change font color of the data cells */
+        .tabulator .tabulator-tableHolder .tabulator-table .tabulator-row .tabulator-cell {
+            color: #dd1515;
+        }
+
+        /* Change background color of the header row */
+        .tabulator .tabulator-header .tabulator-col .tabulator-col-content {
+            background-color: #ddd;
+        }
+
+        /* Change background color of the data rows alternatively */
+        .tabulator .tabulator-tableHolder .tabulator-table .tabulator-row:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="admin-navbar">
+        <div class="navbar-container">
+            <div class="navbar-content-1">
+                <img src="../../img/icon/forthwell logo icon.png" alt="logo" class="logo">
+                <p class="title">Registered Clients</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div id="myGrid">
+        
+    </div>
+
+    <script>
+
+        const targetData = localStorage.getItem("registeredclients");
+
+        //console.log(targetData);
+
+
+
+        // Parse the retrieved JSON data to an array
+        const parsedData = JSON.parse(targetData);
+
+
+
+        // Create a new array and map over the parsed data to the desired format
+        const Tabledata = parsedData.map((targetData) => {
+         return {
+            id: targetData.id,
+            email: targetData.email,
+            createdAt: targetData.createdAt,
+            updatedAt: targetData.updatedAt,
+        };
+    });
+
+    Tabledata.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        const columns = [
+            {title: "ID", field: "id"},
+            {title: "Email", field: "email"},
+            {title: "Created At", field: "createdAt"},
+            {title: "Updated At", field: "updatedAt"},
+            {
+                title: "Status",
+                formatter: statusFormatter,
+                width: 100,
+                
+            },
+            {formatter: deleteButtonFormatter, width: 100, cellClick: handleDeleteRow}
+        ];
+
+        options = {
+            pagination: "local",
+            paginationSize: 14,
+            paginationSizeSelector: [10, 20, 50, 100],
+            movableColumns: true,
+            resizableRows: true,
+            resizableColumns: true,
+            selectable: true,
+            clipboard: true,
+            clipboardPasteAction: "replace",
+            clipboardCopyConfig: {
+                columnHeaders: false,
+                columnGroups: false,
+                rowGroups: false,
+                columnCalcs: false,
+            },
+            
+
+
+        }
+
+
+
+            // Initialize the Tabulator
+          const table = new Tabulator(document.getElementById("myGrid"), {
+                data: Tabledata,
+                columns: columns,
+                fontsize: 20,
+                layout: 'fitColumns', // Adjust column width to content (optional)
+                ...options,
+            });
+
+            // Custom formatter for the "Status" column
+        function statusFormatter(cell, formatterParams, onRendered) {
+            const createdAt = new Date(cell.getData().createdAt);
+            const currentTime = new Date();
+
+            // Calculate the time difference in milliseconds
+             const timeDifference = currentTime.getTime() - createdAt.getTime();
+
+              // 24 hours in milliseconds
+                const oneDay = 24 * 60 * 60 * 1000;
+
+            // Display "New" if less than 24 hours old (86400000 ms in 24 hours)
+             if (timeDifference < oneDay) {
+            // Add the "new" class for "New" status
+            return '<span class="new" style="color:blue;font-weight:bold">New</span>';
+            } else {
+        // Add the "old" class for "Old" status
+                return '<span class="old">Old</span>';
+            }
+        }
+            
+
+             // Custom formatter for the delete button
+            function deleteButtonFormatter(cell, formatterParams, onRendered) {
+                return '<button class="btn btn-danger btn-sm delete-btn">Delete</button>';
+            }
+
+            // Handle row deletion when the delete button is clicked
+        function handleDeleteRow(e, cell) {
+            const row = cell.getRow();
+            const rowData = row.getData();
+
+            console.log(rowData);
+
+        // Show a confirmation dialog before deleting the row
+        if (confirm("Are you sure you want to delete this row?")) {
+         // Delete the row from the table
+            table.deleteRow(row);
+
+
+        // Send a DELETE request to the server to delete the corresponding data from the database
+        const url = `/api/v1/registeredClients/${rowData.id}`;
+
+        fetch(url, {
+            method: "DELETE",
+
+        }).then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data);
+
+            // Remove the deleted item from local storage
+            const storedData = localStorage.getItem("registeredclients");
+            const parsedData = JSON.parse(storedData);
+            const updatedData = parsedData.filter((item) => item.id !== rowData.id);
+            localStorage.setItem("registeredclients", JSON.stringify(updatedData));
+
+            // Show a toast notification if the data is deleted successfully
+            if(data.msg){
+              function showToast() {
+                Toastify({
+                  text: " Data Deleted Successfully",
+                  duration: 3000, // Duration in milliseconds
+                  newWindow: true,
+                  theme:"light",
+                  close: true,
+                  gravity: "top", // Position: "toast-top-left", "toast-top-right", "toast-bottom-left", "toast-bottom-right"
+                  position: "center", // Alignment: "center", "left", "right"
+                  //backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)", // Background color (incorrect)
+                  stopOnFocus: true, // Prevents dismissing of toast on hover
+                }).showToast();
+              }
+            }
+            showToast();
+        }).catch((error) => {
+            console.error("Error:", error);
+        });
+
+
+    }
+
+    }
+
+            
+            
+    </script>
+
+   
+
+    <!-- Template scripts -->
+    <!-- Add any other scripts here that you may need for your application -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+</html>

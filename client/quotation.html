@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link  type="text/css" rel="stylesheet" href="css/contactUs.css">
+    <link  type="text/css" rel="stylesheet" href="css/quote.css">
+
+           <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+     <!-- toast-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+
+    <div class="navbar-one">
+
+        <div class="navbar-one-left">
+            <div class="contacts">
+                
+                <p> <small class="fa fa-phone-alt me-2"></small> +254 791 190 682</p>
+                <p><small class="far fa-envelope-open me-2"></small> info@forthwell.co.ke</p>
+            </div>
+            <div class="opening-time">
+                <p><small class="far fa-clock me-2"></small> Mon- Fri : 08 AM - 06 PM Sat : 09 AM - 02PM</p>
+             </div>
+
+        </div>
+
+        <div class="navbar-one-right">
+            <a class="text-white-50 ms-4" href="https://www.facebook.com/forthwellke"><i class="fab fa-facebook-f" style="color: white;"></i></a>
+            <a class="text-white-50 ms-4" href="https://twitter.com/ForthwellKe"><i class="fab fa-twitter" style="color: white;"></i></a>
+            <a class="text-white-50 ms-4" href="https://www.linkedin.com/company/forthwellke"><i class="fab fa-linkedin-in" style="color: white;"></i></a>
+            <a class="text-white-50 ms-4" href="https://www.instagram.com/forthwellke"><i class="fab fa-instagram" style="color: white;"></i></a>
+        </div>
+
+    </div>
+
+    <!--navbar-two-->
+
+    <div class="quote-body">
+        <img src="img/quote-background.jpeg" alt="" class="quote-image">
+
+        <div class="navbar">
+            <img src="img/icon/icon-02-primary-logo.png" alt="logo" class="logo" >
+            <p class="navbar-two-title">FORTHWELL INSURANCE AGENCY</p>
+        </div>
+
+        <div class="quote-form">
+            <form class="quote" id="quotation-form">
+
+             <div class="text-inputs">
+                <label>FirstName</label>
+                <input type="text" name="firstName" id="firstName" placeholder="Enter your first name" required>
+             </div>
+             <div class="text-inputs">
+                <label>LastName</label>
+                <input type="text" name="lastName" id="lastName" placeholder="Enter your last name" required>
+             </div>
+             <div class="text-inputs">
+                <label>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
+             </div>
+             <div class="text-inputs">
+                <label>Phone</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="phone" id="phone" placeholder="Enter your phone number" required>
+             </div>
+
+             <div class="insurances">
+                <h1>Type of Insurance</h1><br>
+                
+                <span>
+                    <label>
+                        <input type="radio" name="insurance" id="" value="life Insurance" required> Life Insurance 
+                    </label>
+                </span><br>
+               
+                <span>
+                    <label>
+                        
+                        <input type="radio" name="insurance"  id="health" value="health Insurance" required>Health Insurance
+                    </label>
+                </span><br>
+                
+                <span>
+                    <label>
+                       
+                        <input type="radio" name="insurance" id="health" value="home Insurance" required> Home Insurance
+                    </label>
+                </span>
+                <br>
+
+                <span>
+                    <label>
+                       
+                        <input type="radio" name="insurance" id="health" value="car Insurance" required> car Insurance
+                    </label>
+                </span>
+                <br>
+
+                <span>
+                    <label>
+                        
+                        <input type="radio" name="insurance"  id="travel" value="travel Insurance" required>Travel Insurance
+                    </label>
+                </span>
+                <br>
+                
+                <span>
+                    <label>
+                        
+                        <input type="radio" name="insurance" id="education" value="indemnity Insurance" required>Indemnity Insurance
+                    </label>
+                </span>
+                <br>
+                          
+              </div>
+
+                <div class="people">
+                    <label>Number of people <br>to be covered</label>
+                    <input type="text" name="location" id="people" placeholder="Enter No of peope you want to insure" required>
+                <div class="message" >
+
+                <div>
+                    <p>Message</p>
+                    <textarea name="message" id="message" cols="50" rows="10" placeholder="tell us about their *age *relationship " required></textarea>
+                </div>
+                
+             </div>
+
+                <div class="submit">
+                    <button type="submit"  id="submit" >Submit</button>
+                </div>
+        
+            </form>
+        </div>
+    </div>
+
+
+    <script src="js/quote.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+</html>

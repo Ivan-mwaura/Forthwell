@@ -1,0 +1,26 @@
+const mongoose = require('mongoose');
+
+const contactUsSchema = new mongoose.Schema({
+    name:{
+        type: String,
+        required: [true, 'Please enter your first name']
+    },
+    email:{
+        type: String,
+        match:[
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            'Please provide a valid email',
+        ],unique: true,
+    },
+    phone:{
+        type: String,
+        required: [true, 'Please enter your phone number']
+    },
+    message:{
+        type: String,
+        required: [true, 'Please enter your message']
+    }
+},{timestamps: true}
+)
+
+module.exports = mongoose.model('contactUs', contactUsSchema);
