@@ -32,7 +32,7 @@ const form = document.querySelector('#car-insurance').addEventListener('submit',
           })
           .then(function (response) {
             //handle success
-            console.log(response);
+            //console.log(response);
             if(response.data.msg === 'submitted'){
               function showToast() {
                 Toastify({

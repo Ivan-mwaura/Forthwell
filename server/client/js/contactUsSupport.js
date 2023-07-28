@@ -13,7 +13,7 @@ const form = document.querySelector('#contactUs-support').addEventListener('subm
       message,
     };
 
-    console.log(data)
+   // console.log(data)
 
     const newformData = new FormData();
 

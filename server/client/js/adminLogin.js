@@ -10,7 +10,7 @@ const adminRoute = document.querySelector('#adminlogin-form').addEventListener('
         password,
     }
 
-    console.log(data)
+    //console.log(data)
 
     const newformData = new FormData();
 
@@ -25,19 +25,18 @@ const adminRoute = document.querySelector('#adminlogin-form').addEventListener('
 
             headers: {
                 "Content-Type": "multipart/form-data",
+
             }
 
         }).then(function (response) {
-            console.log(response)
+            //console.log(response)
 
             const responseMessage = response.data.msg;
             const {token} = response.data;
 
-          //  localStorage.setItem('token', token);
+             localStorage.setItem('adminToken', token);
 
-            //console.log({token: token})
-            console.log(responseMessage)
-
+           // console.log({token: token})
 
             if(responseMessage){
                 function showToast() {
@@ -56,14 +55,31 @@ const adminRoute = document.querySelector('#adminlogin-form').addEventListener('
             }
             showToast();
 
-            console.log(token)
+            //console.log(token)
 
            // const loginToken = localStorage.getItem('token');
 
             if(token){
-                localStorage.setItem('token', token);
+                localStorage.setItem('adminToken', token);
                 window.location.href = "../adminPanel/pages/adminPanel.html";
             }
+            else{
+                function showToast() {
+                    Toastify({
+                      text: "Not Authorized",
+                      duration: 3000, // Duration in milliseconds
+                      newWindow: true,
+                      theme:"light",
+                      close: true,
+                      backgroundColor:"red",// Background color (incorrect)
+                      gravity: "top", // Position: "toast-top-left", "toast-top-right", "toast-bottom-left", "toast-bottom-right"
+                      position: "center", // Alignment: "center", "left", "right"
+                      //backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)", // Background color (incorrect)
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                    }).showToast();
+                  }
+            }
+            showToast();
 
             
         }).catch(function (error) {

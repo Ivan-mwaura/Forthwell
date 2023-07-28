@@ -8,17 +8,20 @@ const form = document.querySelector('#quotation-form').addEventListener('submit'
     const message = document.getElementById("message").value;
     const people = document.getElementById("people").value;
 
-        // Get all radio buttons with the name "insurance"
-        const selectedRadio = document.querySelector('input[name="insurance"]:checked');
+      // Get all radio buttons with the name "insurance"
+      const radioButtons = document.getElementsByName('insurance');
     
-        // Add a change event listener to each radio button
-        if (selectedRadio) {
-            const selectedValue = selectedRadio.value;
-            console.log('Selected insurance type: ' + selectedValue);
-        } else {
-            console.log('No insurance type selected.');
+      // Loop through the radio buttons to find the selected one
+      for (const radioButton of radioButtons) {
+        if (radioButton.checked) {
+          // Fetch the value of the selected radio button
+          const insuranceType= radioButton.value;
+          localStorage.setItem('selectedInsuranceType', insuranceType);
+          break; // Exit the loop once we find the selected radio button
         }
+      }
 
+    const insuranceType = localStorage.getItem('selectedInsuranceType');
     
     const data = {
       firstName,
@@ -27,10 +30,10 @@ const form = document.querySelector('#quotation-form').addEventListener('submit'
       phone,
       message,
       people,
-      selectedRadio
+      insuranceType
     };
 
-    console.log(data)
+    //console.log(data)
 
 
     const newformData = new FormData();
@@ -42,7 +45,7 @@ const form = document.querySelector('#quotation-form').addEventListener('submit'
 
     try {
        
-        axios.post("/api/v1/indemnityinsurance", newformData, { 
+        axios.post("/api/v1/quotes", newformData, { 
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -73,25 +76,7 @@ const form = document.querySelector('#quotation-form').addEventListener('submit'
 
             document.getElementById("response-error").innerHTML = responseError;
 
-            if(responseError === 'Duplicate email, please choose another Email'){
-              function showToast() {
-                Toastify({
-                  text: "an error occurred during submission",
-                  duration: 3000, // Duration in milliseconds
-                  newWindow: true,
-                  theme:"light",
-                  close: true,
-                  gravity: "top", // Position: "toast-top-left", "toast-top-right", "toast-bottom-left", "toast-bottom-right"
-                  position: "center", // Alignment: "center", "left", "right"
-                  //backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)", // Background color (incorrect)
-                  stopOnFocus: true, // Prevents dismissing of toast on hover
-                  backgroundColor: "linear-gradient(to right, red, #96c93d)", // Background color (incorrect)
-                }).showToast();
-              }
-            }
-            showToast();
-            
-          })
+          });
       
     } catch (error) {
          //handle error

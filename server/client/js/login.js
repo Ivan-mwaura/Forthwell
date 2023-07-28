@@ -10,7 +10,7 @@ const login = document.querySelector('.login-form').addEventListener('submit', f
         password,
     }
 
-    console.log(data)
+   // console.log(data)
 
     const newformData = new FormData();
 
@@ -28,15 +28,14 @@ const login = document.querySelector('.login-form').addEventListener('submit', f
             }
 
         }).then(function (response) {
-            console.log(response)
+            //console.log(response)
 
             const responseMessage = response.data.msg;
             const {token} = response.data;
 
-          //  localStorage.setItem('token', token);
+           // console.log(token)
 
-            //console.log({token: token})
-            console.log(responseMessage)
+           localStorage.setItem('token', token);
 
 
             if(responseMessage){
@@ -56,16 +55,15 @@ const login = document.querySelector('.login-form').addEventListener('submit', f
             }
             showToast();
 
-            console.log(token)
+            const authToken = localStorage.getItem("token")
 
-           // const loginToken = localStorage.getItem('token');
-
-            if(token){
-                localStorage.setItem('token', token);
-                window.location.href = "index.html";
-            }
-
+            if(authToken){
             
+                window.location.href = "index.html";
+            }   
+            else if(!authToken){
+                window.location.href="login.html"
+            }    
         }).catch(function (error) {
 
             console.log(error)

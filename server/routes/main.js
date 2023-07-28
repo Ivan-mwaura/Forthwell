@@ -14,7 +14,8 @@ const {
     contactUs,
     Login,
     Signup,
-    AdminLogin
+    AdminLogin,
+    Quotes
 
  } = require('../controllers/services');
 
@@ -31,6 +32,7 @@ router.route('/contactUs').post(contactUs)
 router.route('/login').post(Login)
 router.route('/signup').post(Signup)
 router.route('/adminLogin').post(AdminLogin)
+router.route('/quotes').post(Quotes)
 
 
 

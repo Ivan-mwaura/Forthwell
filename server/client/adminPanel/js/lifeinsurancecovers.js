@@ -5,7 +5,7 @@ const covers = document.querySelector('#retrieve-life-insurance-covers').addEven
         .then((res) => res.json())
         .then((data) => {
 
-          console.log(data.lifeInsuranceCovers)
+          //console.log(data.lifeInsuranceCovers)
             
           const targetData =  data.lifeInsuranceCovers.map((cover) => {
 

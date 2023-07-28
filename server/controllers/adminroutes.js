@@ -10,6 +10,7 @@ const AppointmentsModel = require('../models/appointments');
 const NewsLetterModel = require('../models/newsletter');
 const ContactUsModel = require('../models/contactUs');
 const RegisteredClientModel = require('../models/UserAuthentication');
+const QuoteModel = require('../models/quotes');
 
 const getLifeInsuranceCovers = async (req, res)=>{
 
@@ -157,6 +158,21 @@ const getRegisteredClient = async (req, res)=>{
         //console.log(carInsuranceCovers)
 
         res.status(StatusCodes.OK).json({ registeredclients});
+    } catch (error) {
+        
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error.message });
+    }
+    
+}
+
+const getQuote = async (req, res)=>{
+
+    try {
+        const quotation = await QuoteModel.find({});
+
+        //console.log(carInsuranceCovers)
+
+        res.status(StatusCodes.OK).json({ quotation});
     } catch (error) {
         
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error.message });
@@ -398,6 +414,28 @@ const deleteRegisteredClient = async (req, res)=>{
 
 }
 
+const deleteQuote = async (req, res)=>{
+
+    //const{params:{id : JobId}} = req;
+     const { params: { id: jobId }} = req
+
+    //console.log(jobId)
+
+  try {
+    const deletedquote = await QuoteModel.findByIdAndRemove({ _id: jobId });
+
+    if(!deletedquote){
+        return res.status(StatusCodes.BAD_REQUEST).json({ msg: "No cover found with this ID" })
+    } 
+
+    res.status(StatusCodes.OK).json({msg: "Quote deleted successfully"});
+
+   } catch (error) {
+        console.log(error)
+   }
+   
+
+}
 module.exports = {
     getLifeInsuranceCovers,
     deleteLifeInsuranceCover,
@@ -418,6 +456,8 @@ module.exports = {
     getHelpSupportInsuranceCovers,
     deleteHelpSupportInsuranceCover,
     getRegisteredClient,
-    deleteRegisteredClient
+    deleteRegisteredClient,
+    getQuote,
+    deleteQuote
     
 }

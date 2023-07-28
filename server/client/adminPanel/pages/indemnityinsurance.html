@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Indemnity covers</title>
 
         <!--css-->
     <link rel="stylesheet" href="../../sass/adminpanel.css">
@@ -187,7 +187,7 @@ Tabledata.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             const row = cell.getRow();
             const rowData = row.getData();
 
-            console.log(rowData);
+            //console.log(rowData);
 
     // Show a confirmation dialog before deleting the row
     if (confirm("Are you sure you want to delete this row?")) {
@@ -203,7 +203,7 @@ Tabledata.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     }).then((response) => response.json())
     .then((data) => {
-        console.log("Success:", data);
+        //console.log("Success:", data);
 
         // Remove the deleted item from local storage
         const storedData = localStorage.getItem("indemnityInsuranceCover");

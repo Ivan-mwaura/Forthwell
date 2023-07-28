@@ -10,7 +10,7 @@ const login = document.querySelector('#signin-form').addEventListener('submit', 
         password,
     }
 
-    console.log(data)
+    //console.log(data)
 
     const newformData = new FormData();
 
@@ -28,10 +28,12 @@ const login = document.querySelector('#signin-form').addEventListener('submit', 
             }
 
         }).then(function (response) {
-            console.log(response)
+            //console.log(response)
 
             const responseMessage = response.data.msg;
             const {token} = response.data;
+
+            localStorage.setItem("token", token)
 
             if(response.data.msg === "Account created successfully"){
                 function showToast() {
@@ -50,11 +52,16 @@ const login = document.querySelector('#signin-form').addEventListener('submit', 
             }
             showToast();
 
-            console.log(token)
+            const authToken = localStorage.getItem("token")
 
-            if(token){
+            if(authToken){
+
                 localStorage.setItem('token', token);
                 window.location.href = "index.html";
+
+            }
+            else if(!authToken){
+                window.location.href = "signin.html"
             }
         }).catch(function (error) {
             

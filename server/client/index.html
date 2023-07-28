@@ -103,7 +103,7 @@
                 <a href="contactUs.html" class="nav-item nav-link" id="contact-us">Contact Us</a>
             </div>
         </div>
-        <a href="https://form.jotform.com/231081755955563" class="btn btn-primary px-3 d-none d-lg-block">Quote</a>
+        <a href="quotation.html" class="btn btn-primary px-3 d-none d-lg-block">Quote</a>
     </nav>
     <!-- Navbar End -->
 
@@ -470,10 +470,20 @@
     </div>
     <!-- Footer End -->
 
+  
+
 
     <!-- Back to Top -->
     <a href="index.html" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
+
+    <script>
+        const authToken = localStorage.getItem("token")
+
+        if(!authToken){
+            window.location.href = "login.html"
+        }
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

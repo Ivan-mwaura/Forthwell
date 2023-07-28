@@ -9,6 +9,7 @@ const IndemnityInsuranceModel = require('../models/indemnityInsurance');
 const AppointmentsModel = require('../models/appointments');
 const NewsLetterModel = require('../models/newsletter');
 const ContactUsModel = require('../models/contactUs');
+const QuoteModel = require('../models/quotes');
 const User = require('../models/UserAuthentication');
 const Admin = require('../models/adminLogin');
 
@@ -35,7 +36,7 @@ const AdminLogin = async (req, res) =>{
 
             const {email, password} = req.body;
 
-            console.log({email, password})
+            //console.log({email, password})
 
             if(!email || !password){
                 return res.status(StatusCodes.BAD_REQUEST).json({msg:'Please provide an email and password'})
@@ -55,7 +56,7 @@ const AdminLogin = async (req, res) =>{
 
             const token = user.createJWT()
 
-            res.status(StatusCodes.OK).json({user:{email:user.email}, token:{token}, msg:'Login successful'})
+            res.status(StatusCodes.OK).json({user:{email:user.email}, token, msg:'Login successful'})
 
          
         })
@@ -76,7 +77,7 @@ const Login = async (req, res) =>{
 
             const {email, password} = req.body;
 
-            console.log({email, password})
+           // console.log({email, password})
 
             if(!email || !password){
                 return res.status(StatusCodes.BAD_REQUEST).json({msg:'Please provide an email and password'})
@@ -96,7 +97,7 @@ const Login = async (req, res) =>{
 
             const token = user.createJWT()
 
-            res.status(StatusCodes.OK).json({user:{email:user.email}, token:{token}, msg:'Login successful'})
+            res.status(StatusCodes.OK).json({user:{email:user.email}, token, msg:'Login successful'})
 
          
         })
@@ -115,7 +116,7 @@ const Signup = async (req, res) =>{
            
             const body = req.body
 
-            console.log(body)
+            //console.log(body)
 
            try {
                 
@@ -123,7 +124,7 @@ const Signup = async (req, res) =>{
 
                 const token = user.createJWT()
 
-                res.status(StatusCodes.CREATED).json({user:{email:user.email}, token:{token}, msg:'Account created successfully'});
+                res.status(StatusCodes.CREATED).json({user:{email:user.email}, token, msg:'Account created successfully'});
                
 
            } catch (err) {
@@ -492,7 +493,7 @@ const newsLetter = async (req, res) =>{
            
             const body = req.body
 
-            console.log(body)
+            //console.log(body)
 
             const newNewsLetter = new NewsLetterModel(body)
 
@@ -572,6 +573,50 @@ const contactUs = async (req, res) =>{
     })
 }
 
+
+const Quotes = async (req, res) =>{
+    upload.any()(req, res, async function(err){
+
+        const body = req.body
+
+        //console.log(body)
+
+        if(err){
+            console.log('Error found')
+        }
+
+        const Quotation = new QuoteModel(body)
+
+        try {
+            const savedForm = await Quotation.save();
+
+           // console.log(savedForm)
+            res.status(StatusCodes.CREATED).json({data:{savedForm}, msg:'submitted'})
+        } catch (err) {
+
+            let customError = {
+                
+                statusCode:err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
+                msg:err.message || 'Something went wrong, try again later'
+              }
+
+              if(err.code && err.code === 11000){
+                customError.msg = `Duplicate email, please choose another Email`
+            
+                customError.statusCode = 400
+              }
+              else{
+                customError.msg = err || 'Something went wrong, try again later'
+            
+                customError.statusCode = 400
+           
+              }
+             
+              return res.status(customError.statusCode).json({ msg: customError.msg })
+        }
+    })
+}
+
 module.exports = {
     LifeInsurance,
     HealthInsurance,
@@ -584,5 +629,6 @@ module.exports = {
     contactUs,
     Signup,
     Login,
-    AdminLogin
+    AdminLogin,
+    Quotes
 }

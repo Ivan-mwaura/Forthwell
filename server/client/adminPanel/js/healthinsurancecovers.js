@@ -20,7 +20,7 @@ const healthCovers = document.querySelector('#retrieve-health-insurance-covers')
 
         });
 
-           console.log(targetData);
+          // console.log(targetData);
 
             localStorage.setItem('healthInsuranceCover', JSON.stringify(targetData));
 

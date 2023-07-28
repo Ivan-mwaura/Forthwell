@@ -22,6 +22,8 @@ const {
     deleteHelpSupportInsuranceCover,
     getRegisteredClient,
     deleteRegisteredClient,
+    getQuote,
+    deleteQuote
 
     
 } = require('../controllers/adminroutes');
@@ -37,6 +39,8 @@ router.route("/appointmentInsuranceCovers").get(getAppointmentInsuranceCovers)
 router.route("/newsletterInsuranceCovers").get(getNewsLetterInsuranceCovers)
 router.route("/helpsupportInsuranceCovers").get(getHelpSupportInsuranceCovers)
 router.route("/registeredClients").get(getRegisteredClient)
+router.route("/quotes").get(getQuote)
+router.route("/quotes/:id").delete(deleteQuote)
 
 
 //delete requests

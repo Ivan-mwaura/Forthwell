@@ -192,7 +192,7 @@
  
          }).then((response) => response.json())
          .then((data) => {
-             console.log("Success:", data);
+             //console.log("Success:", data);
  
              // Remove the deleted item from local storage
              const storedData = localStorage.getItem("healthInsuranceCover");
@@ -200,7 +200,7 @@
              const updatedData = parsedData.filter((item) => item.id !== rowData.id);
              localStorage.setItem("healthInsuranceCover", JSON.stringify(updatedData));
 
-             console.log(data.msg)
+             //console.log(data.msg)
  
              // Show a toast notification if the data is deleted successfully
              if(data.msg){

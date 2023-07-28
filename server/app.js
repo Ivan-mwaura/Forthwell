@@ -9,6 +9,7 @@ const mainRoutes = require('./routes/main');
 const adminRoutes = require('./routes/adminRoutes');
 const connectDB = require('./db/connect');
 const errorHandlerMiddleware = require('./middlewares/error-handler');
+const authenticationMiddleware = require('./middlewares/auth');
 
 app.use(express.json());
 app.use(cors());

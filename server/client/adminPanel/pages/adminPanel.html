@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AdminPanel</title>
 
     <!--css-->
     <link rel="stylesheet" href="../../sass/adminpanel.css">
@@ -84,6 +84,12 @@
             </div>
 
             <div class="requests">
+                <h1 class="request-title">Quotes</h1>
+                <button class="open-button" id="retrieve-quotes-insurance-covers">check >> </button>
+
+            </div>
+
+            <div class="requests">
                 <h1 class="request-title">Registered Clients</h1>
                 <button class="open-button" id="retrieve-registeredclients-insurance-covers">check >> </button>
 
@@ -92,6 +98,15 @@
         </div>
 
     </div>
+
+    <script>
+
+        const token = localStorage.getItem("adminToken")
+
+        if(!token){
+            window.location.href = "../../adminLogin.html"
+        }
+    </script>
 
    
     <!--custom js scripts-->
@@ -106,5 +121,6 @@
     <script src="../js/newslettercovers.js"></script>
     <script src="../js/helpsupportcovers.js"></script>  
     <script src="../js/registeredclients.js"></script>
+    <script src="../js/quotes.js"></script>
 </body>
 </html>
